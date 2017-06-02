@@ -22,6 +22,26 @@ class MainMenu: SKScene {
         background.anchorPoint = CGPoint(x: 0, y: 0)
         background.position = CGPoint(x: 0, y: 0)
         
+        let playButtonSize = CGSize(width: 0.569 * displaySize.width, height: 0.320 * displaySize.height)
+        let playButton = SKSpriteNode(color: SKColor.clear, size: playButtonSize)
+        playButton.anchorPoint = CGPoint(x: 0, y: 0)
+        playButton.position = CGPoint(x: 0.212 * displaySize.width, y: 0.463 * displaySize.height)
+        playButton.name = "playButton"
+        
         addChild(background)
+        addChild(playButton)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let location = t.location(in: self)
+            let touchNode = atPoint(location)
+            
+            if touchNode.name == "playButton" {
+                let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                let gameScene:SKScene = GameScene()
+                self.view?.presentScene(gameScene, transition: transition)
+            }
+        }
     }
 }
