@@ -17,6 +17,7 @@
 		D6483B081ED88691003CBDBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6483B061ED88691003CBDBB /* LaunchScreen.storyboard */; };
 		D6483B131ED88691003CBDBB /* Game_Of_Shapes_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6483B121ED88691003CBDBB /* Game_Of_Shapes_iOSTests.swift */; };
 		D6483B1E1ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6483B1D1ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.swift */; };
+		D69C05501EE1E1D500DE5D5C /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		D6483B191ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Game_Of_Shapes_iOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6483B1D1ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game_Of_Shapes_iOSUITests.swift; sourceTree = "<group>"; };
 		D6483B1F1ED88691003CBDBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				D6483AF91ED88691003CBDBB /* GameScene.sks */,
 				D6483AFB1ED88691003CBDBB /* Actions.sks */,
 				D6483AFD1ED88691003CBDBB /* GameScene.swift */,
+				D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */,
 				D6483AFF1ED88691003CBDBB /* GameViewController.swift */,
 				D6483B011ED88691003CBDBB /* Main.storyboard */,
 				D6483B041ED88691003CBDBB /* Assets.xcassets */,
@@ -272,6 +275,7 @@
 			files = (
 				D6483AFE1ED88691003CBDBB /* GameScene.swift in Sources */,
 				D6483B001ED88691003CBDBB /* GameViewController.swift in Sources */,
+				D69C05501EE1E1D500DE5D5C /* MainMenuScene.swift in Sources */,
 				D6483AF81ED88690003CBDBB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,6 +523,7 @@
 				D6483B241ED88691003CBDBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D6483B251ED88691003CBDBB /* Build configuration list for PBXNativeTarget "Game_Of_Shapes_iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +532,7 @@
 				D6483B271ED88691003CBDBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D6483B281ED88691003CBDBB /* Build configuration list for PBXNativeTarget "Game_Of_Shapes_iOSUITests" */ = {
 			isa = XCConfigurationList;
@@ -535,6 +541,7 @@
 				D6483B2A1ED88691003CBDBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
