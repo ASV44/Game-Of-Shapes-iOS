@@ -27,7 +27,6 @@ class MainMenu: SKScene {
         playButton.anchorPoint = CGPoint(x: 0, y: 0)
         playButton.position = CGPoint(x: 0.212 * displaySize.width, y: 0.463 * displaySize.height)
         playButton.name = "playButton"
-        
         addChild(background)
         addChild(playButton)
     }

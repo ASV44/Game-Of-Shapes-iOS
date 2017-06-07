@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D629BA471EE5AAF3005E65AE /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = D629BA461EE5AAF3005E65AE /* Shape.swift */; };
 		D6483AF81ED88690003CBDBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6483AF71ED88690003CBDBB /* AppDelegate.swift */; };
 		D6483AFA1ED88691003CBDBB /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D6483AF91ED88691003CBDBB /* GameScene.sks */; };
 		D6483AFC1ED88691003CBDBB /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D6483AFB1ED88691003CBDBB /* Actions.sks */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D629BA461EE5AAF3005E65AE /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		D6483AF41ED88690003CBDBB /* Game_Of_Shapes_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game_Of_Shapes_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6483AF71ED88690003CBDBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6483AF91ED88691003CBDBB /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -82,6 +84,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D629BA441EE5A9AA005E65AE /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				D6483AFD1ED88691003CBDBB /* GameScene.swift */,
+				D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		D629BA451EE5AA54005E65AE /* GameWorld */ = {
+			isa = PBXGroup;
+			children = (
+				D629BA461EE5AAF3005E65AE /* Shape.swift */,
+			);
+			name = GameWorld;
+			sourceTree = "<group>";
+		};
 		D6483AEB1ED88690003CBDBB = {
 			isa = PBXGroup;
 			children = (
@@ -105,11 +124,11 @@
 		D6483AF61ED88690003CBDBB /* Game_Of_Shapes_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D629BA451EE5AA54005E65AE /* GameWorld */,
+				D629BA441EE5A9AA005E65AE /* Scenes */,
 				D6483AF71ED88690003CBDBB /* AppDelegate.swift */,
 				D6483AF91ED88691003CBDBB /* GameScene.sks */,
 				D6483AFB1ED88691003CBDBB /* Actions.sks */,
-				D6483AFD1ED88691003CBDBB /* GameScene.swift */,
-				D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */,
 				D6483AFF1ED88691003CBDBB /* GameViewController.swift */,
 				D6483B011ED88691003CBDBB /* Main.storyboard */,
 				D6483B041ED88691003CBDBB /* Assets.xcassets */,
@@ -273,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D629BA471EE5AAF3005E65AE /* Shape.swift in Sources */,
 				D6483AFE1ED88691003CBDBB /* GameScene.swift in Sources */,
 				D6483B001ED88691003CBDBB /* GameViewController.swift in Sources */,
 				D69C05501EE1E1D500DE5D5C /* MainMenuScene.swift in Sources */,

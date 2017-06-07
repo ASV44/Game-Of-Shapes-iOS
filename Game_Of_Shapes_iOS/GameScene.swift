@@ -18,6 +18,17 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
+    private var horizontal_shapes: [Shape] = [Shape]()
+    
+//    override init() {
+//        horizontal_shapes = [Shape]()
+//        super.init()
+//    }
+    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
     override func sceneDidLoad() {
         let displaySize: CGRect = UIScreen.main.bounds
         print(displaySize.width)
@@ -28,9 +39,18 @@ class GameScene: SKScene {
         background.size = CGSize(width: displaySize.width, height: displaySize.height)
         background.anchorPoint = CGPoint(x: 0, y: 0)
         background.position = CGPoint(x: 0, y: 0)
-        
         addChild(background)
+        
+        horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
+        for shape in horizontal_shapes {
+            addChild(shape.opacity)
+            addChild(shape)
+        }
 
+    }
+    
+    func createShapes() {
+        
     }
     
     
