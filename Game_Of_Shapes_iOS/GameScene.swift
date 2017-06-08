@@ -30,6 +30,7 @@ class GameScene: SKScene {
 //    }
     
     override func sceneDidLoad() {
+        //scaleMode = .fill
         let displaySize: CGRect = UIScreen.main.bounds
         print(displaySize.width)
         print(displaySize.height)
@@ -43,6 +44,7 @@ class GameScene: SKScene {
         
         horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
         for shape in horizontal_shapes {
+            print(shape.name!)
             addChild(shape.opacity)
             addChild(shape)
         }
@@ -116,5 +118,43 @@ class GameScene: SKScene {
         }
         
         self.lastUpdateTime = currentTime
+        
+    }
+    
+    override func didMove(to view: SKView) {
+        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedRight))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        
+        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedLeft))
+        swipeLeft.direction = .left
+        view.addGestureRecognizer(swipeLeft)
+        
+        
+        let swipeUp:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedUp))
+        swipeUp.direction = .up
+        view.addGestureRecognizer(swipeUp)
+        
+        
+        let swipeDown:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedDown))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+    }
+    
+    func swipedRight(_ sender:UISwipeGestureRecognizer){
+        print("swiped right")
+    }
+    
+    func swipedLeft(_ sender:UISwipeGestureRecognizer){
+        print("swiped left")
+    }
+    
+    func swipedUp(_ sender:UISwipeGestureRecognizer){
+        print("swiped up")
+    }
+    
+    func swipedDown(_ sender:UISwipeGestureRecognizer){
+        print("swiped down")
     }
 }

@@ -69,6 +69,8 @@ class Shape: SKSpriteNode {
         opacity.size = CGSize(width: width, height: height)
         opacity.position = position
         opacity.anchorPoint = CGPoint(x: 0, y: 0)
+        opacity.zPosition = 1
+        zPosition = 2
     }
     
     required init?(coder aDecoder: NSCoder) {
