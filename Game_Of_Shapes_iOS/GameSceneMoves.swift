@@ -1,5 +1,5 @@
 //
-//  GameScene.swift
+//  GameSceneMoves.swift
 //  Game_Of_Shapes_iOS
 //
 //  Created by Hackintosh on 5/26/17.
@@ -9,50 +9,43 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameSceneMoves: SKScene {
     
-    var entities = [GKEntity]()
-    var graphs = [String : GKGraph]()
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    private var horizontal_shapes: [Shape] = [Shape]()
+//    private var horizontal_shapes: [Shape] = [Shape]()
     
-//    override init() {
-//        horizontal_shapes = [Shape]()
-//        super.init()
-//    }
+    private var items : GameItemsMoves
     
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-    override func sceneDidLoad() {
-        //scaleMode = .fill
+    init(gameMode: String, level: Int) {
         let displaySize: CGRect = UIScreen.main.bounds
         print(displaySize.width)
         print(displaySize.height)
-        self.size = CGSize(width: displaySize.width, height: displaySize.height)
+        let size = CGSize(width: displaySize.width, height: displaySize.height)
+        items = GameItemsMoves(gameMode: gameMode, level: level)
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func sceneDidLoad() {
+        //scaleMode = .fill
         
-        let background = SKSpriteNode(imageNamed: "background.png")
-        background.size = CGSize(width: displaySize.width, height: displaySize.height)
-        background.anchorPoint = CGPoint(x: 0, y: 0)
-        background.position = CGPoint(x: 0, y: 0)
-        addChild(background)
+        //items = GameItemsMoves(gameMode: "Moves", level: 1)
+        addChild((items.background))
         
-        horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
-        for shape in horizontal_shapes {
-            print(shape.name!)
+//        horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
+        for shape in (items.horizontal_shapes) {
+            print("Name", shape.name!)
             addChild(shape.opacity)
             addChild(shape)
         }
 
-    }
-    
-    func createShapes() {
-        
     }
     
     
@@ -112,49 +105,46 @@ class GameScene: SKScene {
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
         
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
         self.lastUpdateTime = currentTime
+        
+        self.items.update(currentTime)
         
     }
     
     override func didMove(to view: SKView) {
-        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedRight))
+        let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameSceneMoves.swipedRight))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
         
         
-        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedLeft))
+        let swipeLeft:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameSceneMoves.swipedLeft))
         swipeLeft.direction = .left
         view.addGestureRecognizer(swipeLeft)
         
         
-        let swipeUp:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedUp))
+        let swipeUp:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameSceneMoves.swipedUp))
         swipeUp.direction = .up
         view.addGestureRecognizer(swipeUp)
         
         
-        let swipeDown:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedDown))
+        let swipeDown:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameSceneMoves.swipedDown))
         swipeDown.direction = .down
         view.addGestureRecognizer(swipeDown)
     }
     
     func swipedRight(_ sender:UISwipeGestureRecognizer){
-        print("swiped right")
+        items.moveRight()
     }
     
     func swipedLeft(_ sender:UISwipeGestureRecognizer){
-        print("swiped left")
+        items.moveLeft()
     }
     
     func swipedUp(_ sender:UISwipeGestureRecognizer){
-        print("swiped up")
+        items.moveUp()
     }
     
     func swipedDown(_ sender:UISwipeGestureRecognizer){
-        print("swiped down")
+        items.moveDown()
     }
 }

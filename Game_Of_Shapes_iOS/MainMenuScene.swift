@@ -37,8 +37,8 @@ class MainMenu: SKScene {
             let touchNode = atPoint(location)
             
             if touchNode.name == "playButton" {
-                let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                let gameScene:SKScene = GameScene()
+                let transition:SKTransition = SKTransition.fade(withDuration: 0)
+                let gameScene:SKScene = GameSceneMoves(gameMode: "Moves", level: 1)
                 self.view?.presentScene(gameScene, transition: transition)
             }
         }
