@@ -37,15 +37,10 @@ class GameSceneMoves: SKScene {
         //scaleMode = .fill
         
         //items = GameItemsMoves(gameMode: "Moves", level: 1)
-        addChild((items.background))
         
 //        horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
-        for shape in (items.horizontal_shapes) {
-            print("Name", shape.name!)
-            addChild(shape.opacity)
-            addChild(shape)
-        }
-
+        
+        items.addToScene(scene: self)
     }
     
     
@@ -133,18 +128,18 @@ class GameSceneMoves: SKScene {
     }
     
     func swipedRight(_ sender:UISwipeGestureRecognizer){
-        items.moveRight()
+        items.move(to: "right")
     }
     
     func swipedLeft(_ sender:UISwipeGestureRecognizer){
-        items.moveLeft()
+        items.move(to: "left")
     }
     
     func swipedUp(_ sender:UISwipeGestureRecognizer){
-        items.moveUp()
+        items.move(to: "up")
     }
     
     func swipedDown(_ sender:UISwipeGestureRecognizer){
-        items.moveDown()
+        items.move(to: "down")
     }
 }

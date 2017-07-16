@@ -35,9 +35,11 @@ class Shape: SKSpriteNode {
             animation = 0.1077 * displaySize.height
             break
         case "horizontal":
-            animation = 0.1925 * displaySize.height
+            animation = 0.1925 * displaySize.width
+            break
         default:
             animation = 0
+            break
         }
         regionWidth = 256
         regionHeight = 256
