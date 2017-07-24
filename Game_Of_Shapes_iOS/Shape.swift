@@ -13,7 +13,7 @@ class Shape: SKSpriteNode {
     let width: CGFloat
     let height: CGFloat
     //TextureRegion region;
-    let location: Int
+    var location: Int
     var animated: CGFloat
     var animation: CGFloat
     var regionWidth: CGFloat
@@ -79,4 +79,47 @@ class Shape: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateCoordinates(orientation: String) {
+        let displaySize: CGRect = UIScreen.main.bounds
+        
+        switch orientation {
+        case "vertical":
+            position.x = 0.413 * displaySize.width
+            let gap = CGFloat(location) * CGFloat(0.0104) * displaySize.height
+            position.y = 0.210 *  displaySize.height + CGFloat(location) * CGFloat(height) + gap
+            animation = 0.1077 * displaySize.height
+            break
+        case "horizontal":
+            let gap = CGFloat(location) * CGFloat(0.0231) * displaySize.width
+            position.x = 0.0314 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
+            position.y = 0.426 * displaySize.height
+            animation = 0.1925 * displaySize.width
+            break
+        default:
+            break
+        }
+        opacity.position = position
+    }
+    
+    func moveRight(increment: CGPoint, bound: Int) {
+        if location == bound - 1 {
+            location = -1
+            updateCoordinates(orientation: "horizontal")
+        }
+        position.x += increment.x
+        opacity.position.x += increment.x
+        animated += increment.x
+        
+    }
+    
+    func increaseLocation(orientation: String , bound: Int) {
+        animated = 0
+        if location < bound - 1 {
+            location += 1
+        }
+        else {
+            location = 0
+        }
+        updateCoordinates(orientation: orientation)
+    }
 }

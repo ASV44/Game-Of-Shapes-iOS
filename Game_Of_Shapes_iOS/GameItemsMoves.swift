@@ -12,6 +12,7 @@ import SpriteKit
 class GameItemsMoves {
     private let background: SKSpriteNode
     private var horizontal_shapes: [Shape] = [Shape]()
+    private var vertical_shapes: [Shape] = [Shape]()
     private let level: Int
     private var increment: CGPoint
     private var direction: String
@@ -34,6 +35,8 @@ class GameItemsMoves {
         
         horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
         
+        vertical_shapes.append(Shape(orientation: "vertical", location: 1, shapeName: "13_10.png"))
+        
         self.level = level + 5
         self.increment = CGPoint()
         self.increment.x = 0.0138 * displaySize.width
@@ -50,6 +53,12 @@ class GameItemsMoves {
         horizontal_region.maskNode = mask
         horizontal_region.zPosition = 3
         
+        regionSize = CGSize(width: 0.1916 * displaySize.width, height: 0.5369 * displaySize.height)
+        mask = SKSpriteNode(color: SKColor.white, size: regionSize)
+        mask.anchorPoint = CGPoint(x: 0, y: 0)
+        mask.position = CGPoint(x: 0.3981 * displaySize.width, y: 0.2052 * displaySize.height)
+        vertical_region.maskNode = mask
+        vertical_region.zPosition = 3
         
     }
     
@@ -62,7 +71,14 @@ class GameItemsMoves {
             horizontal_region.addChild(shape)
         }
         
+        for shape in vertical_shapes {
+            print("Name", shape.name!)
+            vertical_region.addChild(shape.opacity)
+            vertical_region.addChild(shape)
+        }
+        
         scene.addChild(horizontal_region)
+        scene.addChild(vertical_region)
     }
     
     func move(to: String) {
@@ -101,18 +117,35 @@ class GameItemsMoves {
     func moveRight() {
         for shape in horizontal_shapes {
             if shape.animated < shape.animation {
-                shape.position.x += increment.x
-                shape.opacity.position.x += increment.x
-                shape.animated += increment.x
+                shape.moveRight(increment: increment, bound: level)
             }
             else {
                 direction = "NONE"
-                shape.animated = 0
+                shape.increaseLocation(orientation: "horizontal", bound: level)
             }
         }
     }
     
     func moveLeft() {
 
+    }
+    
+    private func getMoveBound(moveDirection: String)->Int {
+        switch moveDirection {
+        case "horizontal":
+            if horizontal_shapes.count > 5 {
+                return horizontal_shapes.count
+            }
+            break
+        case "vertical":
+            if vertical_shapes.count > 5 {
+                return vertical_shapes.count
+            }
+            break
+        default:
+            break;
+        }
+        
+        return 5
     }
 }
