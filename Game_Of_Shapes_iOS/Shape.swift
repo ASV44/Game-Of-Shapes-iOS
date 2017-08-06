@@ -16,11 +16,10 @@ class Shape: SKSpriteNode {
     var location: Int
     var animated: CGFloat
     var animation: CGFloat
-    var regionWidth: CGFloat
-    var regionHeight: CGFloat
     let id: Int
     let connect: String
     let opacity: SKSpriteNode
+    let cloned: Bool
     //Opacity Region
 
     init(orientation: String, location: Int, shapeName: String) {
@@ -41,8 +40,6 @@ class Shape: SKSpriteNode {
             animation = 0
             break
         }
-        regionWidth = 256
-        regionHeight = 256
         let startIndex = shapeName.characters.distance(from: shapeName.startIndex, to: shapeName.characters.index(of: "_")!)
         var start = shapeName.index(shapeName.startIndex, offsetBy: startIndex)
         id = Int(shapeName.substring(to: start))!
@@ -54,6 +51,7 @@ class Shape: SKSpriteNode {
 //        print("Id",id)
 //        print("Connect",connect)
         opacity = SKSpriteNode(imageNamed: "opacity")
+        cloned = false
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         anchorPoint = CGPoint(x: 0, y: 0)
         name = shapeName
@@ -75,21 +73,43 @@ class Shape: SKSpriteNode {
         zPosition = 2
     }
     
+    init(shape: Shape) {
+        width = shape.width
+        height = shape.height
+        self.location = shape.location
+        animated = 0
+        animation = shape.animation
+        id = shape.id
+        connect = shape.connect
+        opacity = SKSpriteNode(imageNamed: "opacity")
+        cloned = true
+        super.init(texture: shape.texture, color: UIColor.clear, size: (shape.texture?.size())!)
+        anchorPoint = CGPoint(x: 0, y: 0)
+        name = shape.name
+        position = shape.position
+        size = CGSize(width: width, height: height)
+        opacity.size = CGSize(width: width, height: height)
+        opacity.position = position
+        opacity.anchorPoint = CGPoint(x: 0, y: 0)
+        opacity.zPosition = 1
+        zPosition = 2
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateCoordinates(orientation: String) {
+    func updateCoordinates(orientation: GameItemsMoves.moveDirection) {
         let displaySize: CGRect = UIScreen.main.bounds
         
         switch orientation {
-        case "vertical":
+        case .VERTICAL:
             position.x = 0.413 * displaySize.width
             let gap = CGFloat(location) * CGFloat(0.0104) * displaySize.height
             position.y = 0.210 *  displaySize.height + CGFloat(location) * CGFloat(height) + gap
             animation = 0.1077 * displaySize.height
             break
-        case "horizontal":
+        case .HORIZONTAL:
             let gap = CGFloat(location) * CGFloat(0.0231) * displaySize.width
             position.x = 0.0314 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
             position.y = 0.426 * displaySize.height
@@ -101,25 +121,44 @@ class Shape: SKSpriteNode {
         opacity.position = position
     }
     
-    func moveRight(increment: CGPoint, bound: Int) {
-        if location == bound - 1 {
-            location = -1
-            updateCoordinates(orientation: "horizontal")
+    func move(direction: GameItemsMoves.moveDirection ,increment: CGPoint) {
+        switch direction {
+        case .UP:
+            position.y += increment.y
+            opacity.position.y += increment.y
+            animated += increment.y
+            break
+        case .DOWN:
+            position.y -= increment.y
+            opacity.position.y -= increment.y
+            animated += increment.y
+            break
+        case .RIGHT:
+            position.x += increment.x
+            opacity.position.x += increment.x
+            animated += increment.x
+            break
+        case .LEFT:
+            position.x -= increment.x
+            opacity.position.x -= increment.x
+            animated += increment.x
+            break
+        default:
+            break
         }
-        position.x += increment.x
-        opacity.position.x += increment.x
-        animated += increment.x
+
         
     }
     
-    func increaseLocation(orientation: String , bound: Int) {
+    func increaseLocation(orientation: GameItemsMoves.moveDirection) {
         animated = 0
-        if location < bound - 1 {
-            location += 1
-        }
-        else {
-            location = 0
-        }
+        location += 1
+        updateCoordinates(orientation: orientation)
+    }
+    
+    func decreaseLocation(orientation: GameItemsMoves.moveDirection) {
+        animated = 0
+        location -= 1
         updateCoordinates(orientation: orientation)
     }
 }

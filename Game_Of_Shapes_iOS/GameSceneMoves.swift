@@ -15,7 +15,6 @@ class GameSceneMoves: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    
 //    private var horizontal_shapes: [Shape] = [Shape]()
     
     private var items : GameItemsMoves
@@ -128,18 +127,18 @@ class GameSceneMoves: SKScene {
     }
     
     func swipedRight(_ sender:UISwipeGestureRecognizer){
-        items.move(to: "right")
+        items.move(to: GameItemsMoves.moveDirection.RIGHT)
     }
     
     func swipedLeft(_ sender:UISwipeGestureRecognizer){
-        items.move(to: "left")
+        items.move(to: GameItemsMoves.moveDirection.LEFT)
     }
     
     func swipedUp(_ sender:UISwipeGestureRecognizer){
-        items.move(to: "up")
+        items.move(to: GameItemsMoves.moveDirection.UP)
     }
     
     func swipedDown(_ sender:UISwipeGestureRecognizer){
-        items.move(to: "down")
+        items.move(to: GameItemsMoves.moveDirection.DOWN)
     }
 }

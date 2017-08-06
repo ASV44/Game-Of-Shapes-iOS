@@ -15,16 +15,16 @@ class GameItemsMoves {
     private var vertical_shapes: [Shape] = [Shape]()
     private let level: Int
     private var increment: CGPoint
-    private var direction: String
+    enum moveDirection { case NONE,UP, DOWN, RIGHT, LEFT, HORIZONTAL, VERTICAL}
+    private var direction: moveDirection
     
     private var regionSize: CGSize
     private var horizontal_region: SKCropNode = SKCropNode()
     private var vertical_region: SKCropNode = SKCropNode()
     private var mask: SKSpriteNode
-
     
     init(gameMode: String, level: Int) {
-        let displaySize: CGRect = UIScreen.main.bounds
+        let displaySize: CGRect = UIScreen.main.coordinateSpace.bounds
         print(displaySize.width)
         print(displaySize.height)
         
@@ -43,7 +43,7 @@ class GameItemsMoves {
         self.increment.y = 0.0075 * displaySize.height
         print(increment)
         
-        self.direction = "NONE"
+        self.direction = .NONE
         
         
         regionSize = CGSize(width: 0.952 * displaySize.width, height: 0.0973 * displaySize.height)
@@ -81,24 +81,61 @@ class GameItemsMoves {
         scene.addChild(vertical_region)
     }
     
-    func move(to: String) {
+    func move(to: moveDirection) {
+        
         direction = to
-        print("swiped " + to)
+        switch direction {
+        case .UP:
+            let bound = getMoveBound(moveDirection: .VERTICAL)
+            if bound == 5 {
+                cloneShape(shapes_vector: &vertical_shapes, direction: .VERTICAL, location: bound - 1)
+            }
+            else {
+                vertical_shapes[bound - 1].location = -1
+                vertical_shapes[bound - 1].updateCoordinates(orientation: .VERTICAL)
+            }
+            break
+        case .DOWN:
+            let bound = getMoveBound(moveDirection: .VERTICAL)
+            if bound == 5 {
+                cloneShape(shapes_vector: &vertical_shapes, direction: .VERTICAL, location: 0)
+            }
+            break
+        case .RIGHT:
+            let bound = getMoveBound(moveDirection: .HORIZONTAL)
+            if bound == 5 {
+                cloneShape(shapes_vector: &horizontal_shapes, direction: .HORIZONTAL, location: bound - 1)
+            }
+            else {
+                horizontal_shapes[bound - 1].location = -1
+                horizontal_shapes[bound - 1].updateCoordinates(orientation: .HORIZONTAL)
+            }
+            break
+        case .LEFT:
+            let bound = getMoveBound(moveDirection: .HORIZONTAL)
+            if bound == 5 {
+                cloneShape(shapes_vector: &horizontal_shapes, direction: .HORIZONTAL, location: 0)
+            }
+            break
+        default:
+            break
+        }
+        print("swiped",to)
     }
     
     func update(_ currentTime: TimeInterval) {
         switch direction {
-        case "up":
-            moveUp()
+        case .UP:
+            moveShapes(shapes_vector: &vertical_shapes, direction: .UP, orientation: .VERTICAL)
             break
-        case "down":
-            moveDown()
+        case .DOWN:
+            moveShapes(shapes_vector: &vertical_shapes, direction: .DOWN, orientation: .VERTICAL)
             break
-        case "right":
-            moveRight()
+        case .RIGHT:
+            moveShapes(shapes_vector: &horizontal_shapes, direction: .RIGHT, orientation: .HORIZONTAL)
             break
-        case "left":
-            moveLeft()
+        case .LEFT:
+            moveShapes(shapes_vector: &horizontal_shapes, direction: .LEFT, orientation: .HORIZONTAL)
             break
         default:
             break
@@ -106,38 +143,36 @@ class GameItemsMoves {
         
     }
     
-    func moveUp() {
-
-    }
-    
-    func moveDown() {
-
-    }
-    
-    func moveRight() {
-        for shape in horizontal_shapes {
+    func moveShapes(shapes_vector: inout [Shape], direction: moveDirection, orientation: moveDirection) {
+        for shape in shapes_vector {
             if shape.animated < shape.animation {
-                shape.moveRight(increment: increment, bound: level)
+                shape.move(direction: direction, increment: increment)
             }
             else {
-                direction = "NONE"
-                shape.increaseLocation(orientation: "horizontal", bound: level)
+                if self.direction != .NONE {
+                    self.direction = .NONE
+                }
+                if(shape.cloned) {
+                    shapes_vector.remove(at: shapes_vector.index(of: shape)!)
+                }
+                if(direction == .UP || direction == .RIGHT) {
+                    shape.increaseLocation(orientation: orientation)
+                }
+                else {
+                    shape.decreaseLocation(orientation: orientation)
+                }
             }
         }
     }
     
-    func moveLeft() {
-
-    }
-    
-    private func getMoveBound(moveDirection: String)->Int {
+    private func getMoveBound(moveDirection: moveDirection)->Int {
         switch moveDirection {
-        case "horizontal":
+        case .HORIZONTAL:
             if horizontal_shapes.count > 5 {
                 return horizontal_shapes.count
             }
             break
-        case "vertical":
+        case .VERTICAL:
             if vertical_shapes.count > 5 {
                 return vertical_shapes.count
             }
@@ -147,5 +182,32 @@ class GameItemsMoves {
         }
         
         return 5
+    }
+    
+    func cloneShape(shapes_vector: inout [Shape], direction: moveDirection, location: Int) {
+        let shapes_region: SKCropNode
+        
+        if direction == .HORIZONTAL {
+            shapes_region = horizontal_region
+        }
+        else {
+            shapes_region = vertical_region
+        }
+        let moveBound = getMoveBound(moveDirection: direction)
+        for shape in shapes_vector {
+            if shape.location == location {
+                let newShape = Shape(shape: shape)
+                shapes_vector.append(newShape)
+                shapes_region.addChild(newShape.opacity)
+                shapes_region.addChild(newShape)
+                if location == 0 {
+                    shape.location = moveBound
+                }
+                else {
+                    shape.location = -1;
+                }
+                shape.updateCoordinates(orientation: direction)
+            }
+        }
     }
 }
