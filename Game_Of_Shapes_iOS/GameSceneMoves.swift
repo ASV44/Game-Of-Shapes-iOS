@@ -26,6 +26,8 @@ class GameSceneMoves: SKScene {
         let size = CGSize(width: displaySize.width, height: displaySize.height)
         items = GameItemsMoves(gameMode: gameMode, level: level)
         super.init(size: size)
+        
+        items.addToScene(scene: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,13 +35,8 @@ class GameSceneMoves: SKScene {
     }
     
     override func sceneDidLoad() {
-        //scaleMode = .fill
+        print("GameScene sceneDidLoad")
         
-        //items = GameItemsMoves(gameMode: "Moves", level: 1)
-        
-//        horizontal_shapes.append(Shape(orientation: "horizontal", location: 1, shapeName: "13_30.png"))
-        
-        items.addToScene(scene: self)
     }
     
     
@@ -106,6 +103,8 @@ class GameSceneMoves: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        print("GameScene didMoveTo")
+        
         let swipeRight:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameSceneMoves.swipedRight))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)

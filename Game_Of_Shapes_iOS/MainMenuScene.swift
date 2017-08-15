@@ -11,12 +11,14 @@ import GameplayKit
 
 class MainMenu: SKScene {
     
-    override func sceneDidLoad() {
+    override init() {
+        print("MainScene init")
         let displaySize: CGRect = UIScreen.main.bounds
         print(displaySize.width)
         print(displaySize.height)
-        //self.scaleMode = .aspectFill
-        self.size = CGSize(width: displaySize.width, height: displaySize.height)
+        let size = CGSize(width: displaySize.width, height: displaySize.height)
+        super.init(size: size)
+
         let background = SKSpriteNode(imageNamed: "menu.png")
         background.size = CGSize(width: displaySize.width, height: displaySize.height)
         background.anchorPoint = CGPoint(x: 0, y: 0)
@@ -29,6 +31,18 @@ class MainMenu: SKScene {
         playButton.name = "playButton"
         addChild(background)
         addChild(playButton)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func sceneDidLoad() {
+        print("MainScene sceneDidLoad")
+    }
+    
+    override func didMove(to: SKView) {
+        print("MainScene didMoveTo")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
