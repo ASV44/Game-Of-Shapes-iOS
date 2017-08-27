@@ -20,6 +20,8 @@
 		D6483B1E1ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6483B1D1ED88691003CBDBB /* Game_Of_Shapes_iOSUITests.swift */; };
 		D66CEB9E1F0539C6001DCE74 /* GameItemsMoves.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66CEB9D1F0539C6001DCE74 /* GameItemsMoves.swift */; };
 		D69C05501EE1E1D500DE5D5C /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */; };
+		D6B259EA1F4893F700EE178D /* Dark.txt in Resources */ = {isa = PBXBuildFile; fileRef = D6B259E91F4893F700EE178D /* Dark.txt */; };
+		D6B259EC1F48941C00EE178D /* Light.txt in Resources */ = {isa = PBXBuildFile; fileRef = D6B259EB1F48941C00EE178D /* Light.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		D6483B1F1ED88691003CBDBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D66CEB9D1F0539C6001DCE74 /* GameItemsMoves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameItemsMoves.swift; sourceTree = "<group>"; };
 		D69C054F1EE1E1D500DE5D5C /* MainMenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		D6B259E91F4893F700EE178D /* Dark.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dark.txt; sourceTree = "<group>"; };
+		D6B259EB1F48941C00EE178D /* Light.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Light.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,7 @@
 				D6483B041ED88691003CBDBB /* Assets.xcassets */,
 				D6483B061ED88691003CBDBB /* LaunchScreen.storyboard */,
 				D6483B091ED88691003CBDBB /* Info.plist */,
+				D6B259E61F48931D00EE178D /* Resources */,
 			);
 			path = Game_Of_Shapes_iOS;
 			sourceTree = "<group>";
@@ -157,6 +162,15 @@
 				D6483B1F1ED88691003CBDBB /* Info.plist */,
 			);
 			path = Game_Of_Shapes_iOSUITests;
+			sourceTree = "<group>";
+		};
+		D6B259E61F48931D00EE178D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D6B259E91F4893F700EE178D /* Dark.txt */,
+				D6B259EB1F48941C00EE178D /* Light.txt */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,8 +281,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B259EC1F48941C00EE178D /* Light.txt in Resources */,
 				D6483B031ED88691003CBDBB /* Main.storyboard in Resources */,
 				D6483AFA1ED88691003CBDBB /* GameScene.sks in Resources */,
+				D6B259EA1F4893F700EE178D /* Dark.txt in Resources */,
 				D6483B051ED88691003CBDBB /* Assets.xcassets in Resources */,
 				D6483B081ED88691003CBDBB /* LaunchScreen.storyboard in Resources */,
 				D6483AFC1ED88691003CBDBB /* Actions.sks in Resources */,

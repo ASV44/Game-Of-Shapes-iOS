@@ -12,7 +12,6 @@ import SpriteKit
 class Shape: SKSpriteNode {
     let width: CGFloat
     let height: CGFloat
-    //TextureRegion region;
     var location: Int
     var animated: CGFloat
     var animation: CGFloat
@@ -20,9 +19,10 @@ class Shape: SKSpriteNode {
     let connect: String
     let opacity: SKSpriteNode
     let cloned: Bool
-    //Opacity Region
+    enum shapeOrientation: String {case NONE, HORIZONTAL, VERTICAL, PIVOT}
+    var orientation: shapeOrientation
 
-    init(orientation: String, location: Int, shapeName: String) {
+    init(orientation: shapeOrientation, location: Int, shapeName: String) {
         let texture = SKTexture(imageNamed: shapeName)
         let displaySize: CGRect = UIScreen.main.bounds
         width = 0.1694 * displaySize.width
@@ -30,10 +30,10 @@ class Shape: SKSpriteNode {
         self.location = location
         animated = 0
         switch orientation {
-        case "vertical":
+        case .VERTICAL:
             animation = 0.1077 * displaySize.height
             break
-        case "horizontal":
+        case .HORIZONTAL:
             animation = 0.1925 * displaySize.width
             break
         default:
@@ -52,24 +52,32 @@ class Shape: SKSpriteNode {
 //        print("Connect",connect)
         opacity = SKSpriteNode(imageNamed: "opacity")
         cloned = false
+        self.orientation = orientation
+        if(location == 2) {
+            self.orientation = .PIVOT
+        }
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         anchorPoint = CGPoint(x: 0, y: 0)
         name = shapeName
-        if orientation == "vertical" {
+        switch orientation {
+        case .VERTICAL:
             position.x = 0.413 * displaySize.width
             let gap = CGFloat(location) * CGFloat(0.0104) * displaySize.height
             position.y = 0.210 *  displaySize.height + CGFloat(location) * CGFloat(height) + gap
-        }
-        if orientation == "horizontal" {
-            let gap = CGFloat(location) * CGFloat(0.0231) * displaySize.width
-            position.x = 0.0314 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
+            break
+        case .HORIZONTAL:
+            let gap = CGFloat(location) * CGFloat(0.0221) * displaySize.width
+            position.x = 0.0304 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
             position.y = 0.426 * displaySize.height
+            break
+        default:
+            break
         }
         size = CGSize(width: width, height: height)
         opacity.size = CGSize(width: width, height: height)
-        opacity.position = position
         opacity.anchorPoint = CGPoint(x: 0, y: 0)
-        opacity.zPosition = 1
+        opacity.zPosition = -1
+        self.addChild(self.opacity)
         zPosition = 2
     }
     
@@ -83,15 +91,16 @@ class Shape: SKSpriteNode {
         connect = shape.connect
         opacity = SKSpriteNode(imageNamed: "opacity")
         cloned = true
+        orientation = shape.orientation
         super.init(texture: shape.texture, color: UIColor.clear, size: (shape.texture?.size())!)
         anchorPoint = CGPoint(x: 0, y: 0)
         name = shape.name
         position = shape.position
         size = CGSize(width: width, height: height)
         opacity.size = CGSize(width: width, height: height)
-        opacity.position = position
         opacity.anchorPoint = CGPoint(x: 0, y: 0)
-        opacity.zPosition = 1
+        opacity.zPosition = -1
+        self.addChild(self.opacity)
         zPosition = 2
     }
     
@@ -110,37 +119,32 @@ class Shape: SKSpriteNode {
             animation = 0.1077 * displaySize.height
             break
         case .HORIZONTAL:
-            let gap = CGFloat(location) * CGFloat(0.0231) * displaySize.width
-            position.x = 0.0314 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
+            let gap = CGFloat(location) * CGFloat(0.0221) * displaySize.width
+            position.x = 0.0304 * displaySize.width + CGFloat(location) * CGFloat(width) + gap
             position.y = 0.426 * displaySize.height
             animation = 0.1925 * displaySize.width
             break
         default:
             break
         }
-        opacity.position = position
     }
     
     func move(direction: GameItemsMoves.moveDirection ,increment: CGPoint) {
         switch direction {
         case .UP:
             position.y += increment.y
-            opacity.position.y += increment.y
             animated += increment.y
             break
         case .DOWN:
             position.y -= increment.y
-            opacity.position.y -= increment.y
             animated += increment.y
             break
         case .RIGHT:
             position.x += increment.x
-            opacity.position.x += increment.x
             animated += increment.x
             break
         case .LEFT:
             position.x -= increment.x
-            opacity.position.x -= increment.x
             animated += increment.x
             break
         default:
@@ -151,14 +155,57 @@ class Shape: SKSpriteNode {
     }
     
     func increaseLocation(orientation: GameItemsMoves.moveDirection) {
+        print("animation",animation)
+        print("animated",animated)
         animated = 0
         location += 1
+        checkPivot(orientation: changeConstant(constant: orientation))
         updateCoordinates(orientation: orientation)
     }
     
-    func decreaseLocation(orientation: GameItemsMoves.moveDirection) {
+    func decreaseLocation(orientation: GameItemsMoves.moveDirection, bound: Int) {
+        print("animation",animation)
+        print("animated",animated)
         animated = 0
         location -= 1
+        if location < 0 {
+            location = bound - 1
+        }
+        checkPivot(orientation: changeConstant(constant: orientation))
         updateCoordinates(orientation: orientation)
+    }
+    
+    func changeLocation(direction: GameItemsMoves.Direction, bound: Int) {
+        if(direction.moveDirection == .UP || direction.moveDirection == .RIGHT) {
+            increaseLocation(orientation: direction.orientation)
+        }
+        else {
+            decreaseLocation(orientation: direction.orientation, bound: bound)
+        }
+    }
+    
+    func checkPivot(orientation: shapeOrientation) {
+        if(location == 2) {
+            self.orientation = .PIVOT
+        }
+        else if self.orientation == .PIVOT {
+            self.orientation = orientation
+        }
+    }
+    
+    func changeConstant(constant: GameItemsMoves.moveDirection) -> shapeOrientation {
+        var newConstant: shapeOrientation = .NONE
+        switch constant {
+        case GameItemsMoves.moveDirection.HORIZONTAL:
+            newConstant = .HORIZONTAL
+            break
+        case GameItemsMoves.moveDirection.VERTICAL:
+            newConstant = .VERTICAL
+            break
+        default:
+            break
+        }
+        
+        return newConstant
     }
 }

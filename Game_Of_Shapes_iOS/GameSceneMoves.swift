@@ -126,18 +126,30 @@ class GameSceneMoves: SKScene {
     }
     
     func swipedRight(_ sender:UISwipeGestureRecognizer){
-        items.move(to: GameItemsMoves.moveDirection.RIGHT)
+        if(items.direction.moveDirection == GameItemsMoves.moveDirection.NONE) {
+            items.move(to: GameItemsMoves.Direction(moveDirection: GameItemsMoves.moveDirection.RIGHT,
+                                                    orientation: GameItemsMoves.moveDirection.HORIZONTAL))
+        }
     }
     
     func swipedLeft(_ sender:UISwipeGestureRecognizer){
-        items.move(to: GameItemsMoves.moveDirection.LEFT)
+        if(items.direction.moveDirection == GameItemsMoves.moveDirection.NONE) {
+            items.move(to: GameItemsMoves.Direction(moveDirection: GameItemsMoves.moveDirection.LEFT,
+                                                    orientation: GameItemsMoves.moveDirection.HORIZONTAL))
+        }
     }
     
     func swipedUp(_ sender:UISwipeGestureRecognizer){
-        items.move(to: GameItemsMoves.moveDirection.UP)
+        if(items.direction.moveDirection == GameItemsMoves.moveDirection.NONE) {
+            items.move(to: GameItemsMoves.Direction(moveDirection: GameItemsMoves.moveDirection.UP,
+                                                    orientation: GameItemsMoves.moveDirection.VERTICAL))
+        }
     }
     
     func swipedDown(_ sender:UISwipeGestureRecognizer){
-        items.move(to: GameItemsMoves.moveDirection.DOWN)
+        if(items.direction.moveDirection == GameItemsMoves.moveDirection.NONE) {
+            items.move(to: GameItemsMoves.Direction(moveDirection: GameItemsMoves.moveDirection.DOWN,
+                                                    orientation: GameItemsMoves.moveDirection.VERTICAL))
+        }
     }
 }
